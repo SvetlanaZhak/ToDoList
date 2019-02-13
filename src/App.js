@@ -3,26 +3,83 @@ import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {description: '', todos: [], date: ''}
+ 
+  }
+
+  descriptionChanged = (event) => {
+    this.setState({description: event.target.value});
+  }
+  dateChanged = (event) => {
+    this.setState({date: event.target.value});
+  }
+
+  addTodo = (event) => {
+    event.preventDefault();
+    this.setState({
+      todos: [...this.state.todos, {description: this.state.description, date: this.state.date}]
+    });
+  }
+ 
+  deleteTodo = (index) => {
+      this.setState({
+        todos: this.state.todos.filter((todo, i) => i !== index)
+      });
+  }
+ 
+  
+  renderRow = (item, index) => {
+      return  (
+          <tr>
+            <td>{item.description}</td>
+            <td>{item.date}</td>
+          <td><input type="button" onClick={() => this.deleteTodo(index)} value="Delete"/></td>
+          </tr>
+        
+      )
+  }
+  
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <div className="App-header">
+          <h2>Lana's Todolist</h2>
+        </div>
+        <div>
+          <form onSubmit={this.addTodo}>
+            <div className="Div-inputs">
+                <div>
+                    <div>Date:</div>
+                    <input type="text" onChange={this.descriptionChanged} value={this.state.description}/>
+                </div>
+                <div>
+                    <div>Description:</div>
+                    <input type="text" onChange={this.dateChanged} value= {this.state.date}/>
+                </div>
+                <input type="submit" value="Add"/>
+            </div>
+          </form>
+     
+        </div>
+        <div className="Table">
+          <table >
+        <tbody>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+        
+            </tr>
+            {this.state.todos.map((item, index) => this.renderRow(item, index))}
+        </tbody>
+        
+          </table>
+        </div>          
+      </div>    
     );
   }
+  
 }
 
 export default App;
