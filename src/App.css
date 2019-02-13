@@ -30,29 +30,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-.Table {
-    display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-    margin: auto;
-    width: 100%;
-}
-.Table td, .Table th {
-  border: 5px solid #ddd;
-  padding: 20px;
-}
-.Table tr:nth-child(even){
-    background-color: #f2f2f2;
-   
-}
-.Table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: plum;
-  color: white;
-}
+
 .App-link {
   color: #61dafb;
 }
