@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
 import TodoTable from './TodoTable';
 
@@ -53,11 +53,12 @@ class App extends Component {
             <div className="Div-inputs">
               <div>
                 <div>Date:</div>
-                <input type="text" onChange={this.descriptionChanged} value={this.state.description} />
+                <input type="date" onChange={this.dateChanged} value={this.state.date} />
+
               </div>
               <div>
                 <div>Description:</div>
-                <input type="text" onChange={this.dateChanged} value={this.state.date} />
+                <input type="text" onChange={this.descriptionChanged} value={this.state.description} />
               </div>
               <input type="submit" value="Add" />
             </div>
