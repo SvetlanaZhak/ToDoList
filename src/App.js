@@ -1,46 +1,32 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
-import './App.css';
 import TodoTable from './components/TodoTable';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { description: '', todos: [], date: '' }
-
+    this.state = { description: '', date: '', todos: [] }
   }
 
-  descriptionChanged = (event) => {
-    this.setState({ description: event.target.value });
-  }
-  dateChanged = (event) => {
-    this.setState({ date: event.target.value });
+  inputChanged = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   addTodo = (event) => {
     event.preventDefault();
+    const newTodo = { description: this.state.description, date: this.state.date };
     this.setState({
-      todos: [...this.state.todos, { description: this.state.description, date: this.state.date }]
+      date: '',
+      description: '',
+      todos: [...this.state.todos, newTodo]
     });
   }
-
-  deleteTodo = (index) => {
+  deleteItem = (row) => {
     this.setState({
-      todos: this.state.todos.filter((todo, i) => i !== index)
-    });
+      todos: this.state.todos.filter((todo, i) => i !== row.index)
+    })
   }
 
-
-  renderRow = (item, index) => {
-    return (
-      <tr>
-        <td>{item.description}</td>
-        <td>{item.date}</td>
-        <td><input type="button" onClick={() => this.deleteTodo(index)} value="Delete" /></td>
-      </tr>
-
-    )
-  }
 
   render() {
     return (
@@ -50,26 +36,19 @@ class App extends Component {
         </div>
         <div>
           <form onSubmit={this.addTodo}>
-            <div className="Div-inputs">
-              <div>
-                <div>Date:</div>
-                <input type="date" onChange={this.dateChanged} value={this.state.date} />
-
-              </div>
-              <div>
-                <div>Description:</div>
-                <input type="text" onChange={this.descriptionChanged} value={this.state.description} />
-              </div>
+            <fieldset>
+              <legend>New todo:</legend>
+              Description: <input type="text" name="description" onChange={this.inputChanged} value={this.state.description} />
+              Date: <input type="date" placeholder="dd.mm.yyyy" name="date" onChange={this.inputChanged} value={this.state.date} />
               <input type="submit" value="Add" />
-            </div>
+            </fieldset>
           </form>
-
         </div>
-        <TodoTable todos={this.state.todos} deleteTodo={this.deleteTodo} />
+
+        <TodoTable todos={this.state.todos} onDelete={this.deleteItem} />
       </div>
     );
   }
-
 }
 
 export default App;
