@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import TodoTable from './components/TodoTable';
 import './App.css';
+import Button from '@material-ui/core/Button';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import SaveIcon from '@material-ui/icons/Save';
+import TextField from '@material-ui/core/TextField';
 
 class App extends Component {
   constructor(props) {
@@ -31,22 +36,26 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>Lana's Todolist</h2>
-        </div>
+        <AppBar position="static">
+          <Toolbar>
+            TODOLIST
+          </Toolbar>
+        </AppBar>
         <div>
           <form onSubmit={this.addTodo}>
             <fieldset>
               <legend>New todo:</legend>
-              Description: <input type="text" name="description" onChange={this.inputChanged} value={this.state.description} />
-              Date: <input type="date" placeholder="dd.mm.yyyy" name="date" onChange={this.inputChanged} value={this.state.date} />
-              <input type="submit" value="Add" />
+              <TextField type="text" label="Description" name="description" onChange={this.inputChanged} value={this.state.description} />
+              <TextField type="date" label="Date" InputLabelProps={{ shrink: true, }} name="date" onChange={this.inputChanged} value={this.state.date} />
+              <Button onClick={this.addTodo} variant="contained" color="primary" size="small">
+                <SaveIcon />
+                Add
+              </Button>
             </fieldset>
           </form>
         </div>
-
         <TodoTable todos={this.state.todos} onDelete={this.deleteItem} />
-      </div>
+      </div >
     );
   }
 }
